@@ -2,11 +2,30 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">响应式测试</router-link> |
-      <router-link to="/test2">冒泡测试</router-link>
+      <router-link to="/test2">冒泡测试</router-link> |
+      <router-link to="/test3">生命周期</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+/* eslint-disable */
+export default {
+  mounted() {
+    console.log('mounted1')
+  },
+  created : [
+    function() {
+      console.log('mounted2')
+    },
+    function() {
+      console.log('mounted3')
+    }
+  ]
+}
+/* eslint-enable */
+</script>
 
 <style lang="less">
 #app {
