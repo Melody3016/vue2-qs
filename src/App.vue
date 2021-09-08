@@ -4,7 +4,8 @@
       <router-link to="/">响应式测试</router-link> |
       <router-link to="/test2">冒泡测试</router-link> |
       <router-link to="/test3">生命周期</router-link> |
-      <router-link to="/test4">lazy修饰符测试</router-link>
+      <router-link to="/test4">lazy修饰符测试</router-link> |
+      <router-link to="/test5">非prop的attribute测试</router-link>
     </div>
     <router-view/>
   </div>
