@@ -6,7 +6,8 @@
       <router-link to="/test3">生命周期</router-link> |
       <router-link to="/test4">lazy修饰符测试</router-link> |
       <router-link to="/test5">非prop的attribute测试</router-link> |
-      <router-link to="/test6">自定义事件名测试</router-link>
+      <router-link to="/test6">自定义事件名测试</router-link> |
+      <router-link to="/test7">组件使用v-model</router-link>
     </div>
     <router-view/>
   </div>
