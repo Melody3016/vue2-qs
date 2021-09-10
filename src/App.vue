@@ -9,7 +9,8 @@
       <router-link to="/test6">自定义事件名测试</router-link> |
       <router-link to="/test7">组件使用v-model</router-link> |
       <router-link to="/test8">.sync修饰符测试</router-link> |
-      <router-link to="/test9">路由缓存测试</router-link>
+      <router-link to="/test9">路由缓存测试</router-link> |
+      <router-link to="/test10">子传父测试</router-link>
     </div>
     <router-view/>
   </div>
