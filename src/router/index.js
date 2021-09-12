@@ -81,11 +81,6 @@ const routes = [
     component: () => import('../views/Test11.vue')
   },
   {
-    path: '*',
-    name: 'NotFound',
-    component: () => import('../components/NotFound.vue')
-  },
-  {
     path: '/test12',
     name: 'Test12',
     component: () => import('../views/Test12.vue'),
@@ -106,6 +101,16 @@ const routes = [
         component: () => import('../views/Test123.vue')
       }
     ]
+  },
+  {
+    path: '/test13',
+    name: 'Test13',
+    component: () => import('../views/Test13.vue')
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: () => import('../components/NotFound.vue')
   }
 ]
 
