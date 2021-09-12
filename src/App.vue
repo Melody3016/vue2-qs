@@ -11,9 +11,12 @@
       <router-link to="/test8">.sync修饰符测试</router-link> |
       <router-link to="/test9">路由缓存测试</router-link> |
       <router-link to="/test10">子传父测试</router-link> |
-      <router-link to="/test11">编程式路由导航</router-link>
+      <router-link to="/test11">编程式路由导航</router-link> |
+      <router-link to="/test12">滚动行为测试</router-link>
     </div>
-    <router-view/>
+    <div class="main">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -45,9 +48,13 @@ export default {
 }
 
 #nav {
+  position: fixed;
+  top: 0;
   padding: 30px;
+  line-height: 2;
 
   a {
+    display: inline-block;
     font-weight: bold;
     color: #2c3e50;
 
@@ -55,5 +62,8 @@ export default {
       color: #42b983;
     }
   }
+}
+.main {
+  padding-top: 100px;
 }
 </style>

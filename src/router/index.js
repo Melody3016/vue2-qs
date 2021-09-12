@@ -84,12 +84,42 @@ const routes = [
     path: '*',
     name: 'NotFound',
     component: () => import('../components/NotFound.vue')
+  },
+  {
+    path: '/test12',
+    name: 'Test12',
+    component: () => import('../views/Test12.vue'),
+    children: [
+      {
+        path: 'test121',
+        name: 'Test121',
+        component: () => import('../views/Test121.vue')
+      },
+      {
+        path: 'test122',
+        name: 'Test122',
+        component: () => import('../views/Test122.vue')
+      },
+      {
+        path: 'test123',
+        name: 'Test123',
+        component: () => import('../views/Test123.vue')
+      }
+    ]
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  scrollBehavior (to, from, savaPosition) {
+    console.log(to)
+    if (savaPosition) {
+      return savaPosition
+    } else {
+      return { x: 0, y: 0, behavior: 'smooth' }
+    }
+  }
 })
 
 export default router

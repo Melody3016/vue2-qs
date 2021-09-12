@@ -4,6 +4,7 @@
       :getMsg="getMsg"
      />
      来自子组件的数据：{{ msg }}
+    <div :style="{ height: '5000px' }"></div>
   </div>
 </template>
 

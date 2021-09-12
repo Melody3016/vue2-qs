@@ -43,6 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 #nav {
+  top: 50px;
   a {
     cursor: pointer;
     &.actived {

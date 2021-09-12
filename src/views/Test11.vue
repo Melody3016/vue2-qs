@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <button @click="clickHandle">路由跳转</button>
+    <div :style="{ height: '5000px' }"></div>
   </div>
 </template>
 
