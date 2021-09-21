@@ -13,7 +13,9 @@
       <router-link to="/test10">子传父测试</router-link> |
       <router-link to="/test11">编程式路由导航</router-link> |
       <router-link to="/test12">滚动行为测试</router-link> |
-      <router-link to="/test13">导航故障测试</router-link>
+      <router-link to="/test13">导航故障测试</router-link> |
+      <router-link to="/test14">tabs过渡测试</router-link> |
+      <router-link to="/test15">tabs过渡测试2</router-link>
     </div>
     <div class="main">
       <router-view/>
