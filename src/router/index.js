@@ -11,7 +11,7 @@ const routes = [
     component: Test1
   },
   {
-    path: '/test2',
+    path: '/test2/:userId',
     name: 'Test2',
     component: () => import('../views/Test2.vue'),
     props: route => (route.query)

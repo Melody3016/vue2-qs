@@ -15,7 +15,7 @@ export default {
       // this.$router.push('/test9/test91')
       // this.$router.push({ path: 'test9/test91' })
       // this.$router.push({ path: '/test9/test91' })
-      // this.$router.push({ name: 'Test2', params: { userId } })
+      this.$router.push({ name: 'Test2' })
       // const result = this.$router.push({ path: 'test11' },
       //   function() {
       //     console.log('成功')
@@ -25,7 +25,7 @@ export default {
       //   }
       // )
       // console.log(result)
-      this.$router.push({ name: 'Test2', query: { userId: 123 } })
+      // this.$router.push({ name: 'Test2', query: { userId: 123 } })
     }
   }
 }
