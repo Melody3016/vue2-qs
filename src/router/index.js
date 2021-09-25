@@ -11,7 +11,7 @@ const routes = [
     component: Test1
   },
   {
-    path: '/test2/:userId',
+    path: '/test2/',
     name: 'Test2',
     component: () => import('../views/Test2.vue'),
     props: route => (route.query)
@@ -128,7 +128,6 @@ const router = new VueRouter({
   mode: 'history',
   routes,
   scrollBehavior (to, from, savaPosition) {
-    console.log(to)
     if (savaPosition) {
       return savaPosition
     } else {
