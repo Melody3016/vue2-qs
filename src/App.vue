@@ -9,6 +9,7 @@
           <el-menu
             :default-openeds="['1']"
             :unique-opened="true"
+            :default-active="activeIndex"
             :router="true"
             background-color="#545c64"
             text-color="#fff"
@@ -61,6 +62,23 @@
 
 <script>
 export default {
+  data() {
+    return {
+      activeIndex: '/'
+    }
+  },
+  /* mounted() {
+    console.log(this.$route)
+    this.activeIndex = window.location.href.split('#')[1]
+  },
+  updated() {
+    // console.log(this.$route)
+  } */
+  watch: {
+    $route(newVal) {
+      this.activeIndex = newVal.path
+    }
+  }
 }
 </script>
 
