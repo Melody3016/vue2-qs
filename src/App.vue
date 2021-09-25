@@ -9,59 +9,30 @@
           <el-menu
             :default-openeds="['1']"
             :unique-opened="true"
+            :router="true"
             background-color="#545c64"
             text-color="#fff"
           >
             <el-submenu index="1">
               <template slot="title">基础部分</template>
-              <router-link to="/" v-slot="{ navigate }">
-                <el-menu-item index="1-1" @click="navigate">响应式测试</el-menu-item>
-              </router-link>
-              <router-link to="/test2" v-slot="{ navigate }">
-                <el-menu-item index="1-2" @click="navigate">冒泡测试</el-menu-item>
-              </router-link>
-              <router-link to="/test3" v-slot="{ navigate }">
-                <el-menu-item index="1-3" @click="navigate">生命周期</el-menu-item>
-              </router-link>
-              <router-link to="/test4" v-slot="{ navigate }">
-                <el-menu-item index="1-4" @click="navigate">lazy修饰符测试</el-menu-item>
-              </router-link>
-              <router-link to="/test5" v-slot="{ navigate }">
-                <el-menu-item index="1-5" @click="navigate">非prop的attribute测试</el-menu-item>
-              </router-link>
-              <router-link to="/test6" v-slot="{ navigate }">
-                <el-menu-item index="1-6" @click="navigate">自定义事件名测试</el-menu-item>
-              </router-link>
-              <router-link to="/test7" v-slot="{ navigate }">
-                <el-menu-item index="1-7" @click="navigate">组件使用v-model</el-menu-item>
-              </router-link>
-              <router-link to="/test8" v-slot="{ navigate }">
-                <el-menu-item index="1-8" @click="navigate">.sync修饰符测试</el-menu-item>
-              </router-link>
-              <router-link to="/test10" v-slot="{ navigate }">
-                <el-menu-item index="1-9" @click="navigate">子传父测试</el-menu-item>
-              </router-link>
-              <router-link to="/test14" v-slot="{ navigate }">
-                <el-menu-item index="1-10" @click="navigate">tabs过渡测试</el-menu-item>
-              </router-link>
-              <router-link to="/test15" v-slot="{ navigate }">
-                <el-menu-item index="1-11" @click="navigate">tabs过渡测试2</el-menu-item>
-              </router-link>
+              <el-menu-item index="/">响应式测试</el-menu-item>
+              <el-menu-item index="/test2">冒泡测试</el-menu-item>
+              <el-menu-item index="/test3">生命周期</el-menu-item>
+              <el-menu-item index="/test4">lazy修饰符测试</el-menu-item>
+              <el-menu-item index="/test5">非prop的attribute测试</el-menu-item>
+              <el-menu-item index="/test6">自定义事件名测试</el-menu-item>
+              <el-menu-item index="/test7">组件使用v-model</el-menu-item>
+              <el-menu-item index="/test8">.sync修饰符测试</el-menu-item>
+              <el-menu-item index="/test10">子传父测试</el-menu-item>
+              <el-menu-item index="/test14">tabs过渡测试</el-menu-item>
+              <el-menu-item index="/test15">tabs过渡测试2</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title">路由相关</template>
-              <router-link to="/test9" v-slot="{ navigate }">
-                <el-menu-item index="2-1" @click="navigate">路由缓存测试</el-menu-item>
-              </router-link>
-              <router-link to="/test11" v-slot="{ navigate }">
-                <el-menu-item index="2-2" @click="navigate">编程式路由导航</el-menu-item>
-              </router-link>
-              <router-link to="/test12" v-slot="{ navigate }">
-                <el-menu-item index="2-3" @click="navigate">滚动行为测试</el-menu-item>
-              </router-link>
-              <router-link to="/test13" v-slot="{ navigate }">
-                <el-menu-item index="2-4" @click="navigate">导航故障测试</el-menu-item>
-              </router-link>
+              <el-menu-item index="/test9">路由缓存测试</el-menu-item>
+              <el-menu-item index="/test11">编程式路由导航</el-menu-item>
+              <el-menu-item index="/test12">滚动行为测试</el-menu-item>
+              <el-menu-item index="/test13">导航故障测试</el-menu-item>
             </el-submenu>
             <el-submenu index="3">
               <template slot="title">Vuex相关</template>

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Test1 from '../views/Test1.vue'
+import Test2 from '../views/Test2.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,7 @@ const routes = [
   {
     path: '/test2/',
     name: 'Test2',
-    component: () => import('../views/Test2.vue'),
+    component: Test2,
     props: route => (route.query)
   },
   {
@@ -125,7 +126,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   routes,
   scrollBehavior (to, from, savaPosition) {
     if (savaPosition) {
