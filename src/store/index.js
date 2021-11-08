@@ -5,10 +5,203 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    routesInfo: [
+      {
+        path: '/test1',
+        name: 'Test1',
+        title: '响应式测试',
+        componentUrl: 'base/Test1.vue',
+        status: 1
+      },
+      {
+        path: '/test2',
+        name: 'Test2',
+        title: '冒泡测试',
+        componentUrl: 'base/Test2.vue',
+        props: route => (route.query),
+        status: 1
+      },
+      {
+        path: '/test3',
+        name: 'Test3',
+        title: '生命周期',
+        componentUrl: 'base/Test3.vue',
+        status: 1
+      },
+      {
+        path: '/test4',
+        name: 'Test4',
+        title: 'lazy修饰符测试',
+        componentUrl: 'base/Test4.vue',
+        status: 1
+      },
+      {
+        path: '/test5',
+        name: 'Test5',
+        title: '非prop的attribute测试',
+        componentUrl: 'base/Test5.vue',
+        status: 1
+      },
+      {
+        path: '/test6',
+        name: 'Test6',
+        title: '自定义事件名测试',
+        componentUrl: 'base/Test6.vue',
+        status: 1
+      },
+      {
+        path: '/test7',
+        name: 'Test7',
+        title: '组件使用v-model',
+        componentUrl: 'base/Test7.vue',
+        status: 1
+      },
+      {
+        path: '/test8',
+        name: 'Test8',
+        title: '.sync修饰符测试',
+        componentUrl: 'base/Test8.vue',
+        status: 1
+      },
+      {
+        path: '/test9',
+        name: 'Test9',
+        title: '路由缓存测试',
+        componentUrl: 'router/Test9.vue',
+        meta: {
+          msg: '我是test9路由信息'
+        },
+        children: [
+          {
+            path: 'test91',
+            name: 'Test91',
+            title: '子路由1',
+            componentUrl: 'router/Test91.vue',
+            meta: {
+              msg: '我是test9下的test91路由信息'
+            }
+          },
+          {
+            path: 'test92/:id',
+            name: 'Test92',
+            title: '子路由2',
+            componentUrl: 'router/Test92.vue'
+          },
+          {
+            path: 'test93',
+            name: 'Test93',
+            title: '子路由3',
+            componentUrl: 'router/Test93.vue'
+          }
+        ],
+        status: 2
+      },
+      {
+        path: '/test10',
+        name: 'Test10',
+        title: '子传父测试',
+        componentUrl: 'base/Test10.vue',
+        status: 1
+      },
+      {
+        path: '/test11',
+        name: 'Test11',
+        title: '编程式路由导航',
+        componentUrl: 'router/Test11.vue',
+        status: 2
+      },
+      {
+        path: '/test12',
+        name: 'Test12',
+        title: '滚动行为测试',
+        componentUrl: 'router/Test12.vue',
+        children: [
+          {
+            path: 'test121',
+            name: 'Test121',
+            title: '子路由1',
+            componentUrl: 'router/Test121.vue'
+          },
+          {
+            path: 'test122',
+            name: 'Test122',
+            title: '子路由2',
+            componentUrl: 'router/Test122.vue'
+          },
+          {
+            path: 'test123',
+            name: 'Test123',
+            title: '子路由3',
+            componentUrl: 'router/Test123.vue'
+          }
+        ],
+        status: 2
+      },
+      {
+        path: '/test13',
+        name: 'Test13',
+        title: '导航故障测试',
+        componentUrl: 'router/Test13.vue',
+        status: 2
+      },
+      {
+        path: '/test14',
+        name: 'Test14',
+        title: 'tabs过渡测试',
+        componentUrl: 'project/Test14.vue',
+        status: 3
+      },
+      {
+        path: '/test15',
+        name: 'Test15',
+        title: 'tabs过渡测试2',
+        componentUrl: 'project/Test15.vue',
+        status: 3
+      },
+      {
+        path: '/test16',
+        name: 'Test16',
+        title: '子组件重新渲染问题',
+        componentUrl: 'project/Test16.vue',
+        status: 3
+      },
+      {
+        path: '/pdf',
+        name: 'PDFTest',
+        title: '加载显示pdf文件',
+        componentUrl: 'project/PDFTest.vue',
+        status: 3
+      },
+      {
+        path: '/select',
+        name: 'SelectTest',
+        title: '下拉选择框添加图标',
+        componentUrl: 'project/SelectTest.vue',
+        status: 3
+      },
+      {
+        path: '/routerInfo',
+        name: 'RouterInfo',
+        title: '路由懒加载信息获取',
+        componentUrl: 'router/RouterInfo.vue',
+        status: 2
+      }
+    ]
   },
   mutations: {
   },
   actions: {
+  },
+  getters: {
+    baseNavInfo(state) {
+      return state.routesInfo.filter(item => item.status === 1)
+    },
+    routerNavInfo(state) {
+      return state.routesInfo.filter(item => item.status === 2)
+    },
+    projectNavInfo(state) {
+      return state.routesInfo.filter(item => item.status === 3)
+    }
   },
   modules: {
   }

@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import {
   tabs, tabPane, Container, Header, Aside, Main,
-  Menu, Submenu, MenuItemGroup, MenuItem
+  Menu, Submenu, MenuItemGroup, MenuItem, Select, Option
 } from 'element-ui'
 
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
-import './assets/css/reset.css'
 
 Vue.config.productionTip = false
 Vue.use(tabs)
@@ -21,6 +19,8 @@ Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItemGroup)
 Vue.use(MenuItem)
+Vue.use(Select)
+Vue.use(Option)
 
 new Vue({
   router,

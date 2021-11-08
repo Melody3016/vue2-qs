@@ -7,7 +7,7 @@
       <el-container>
         <el-aside width="220px">
           <el-menu
-            :default-openeds="['1']"
+            :default-openeds="submenuIndex"
             :unique-opened="true"
             :default-active="activeIndex"
             :router="true"
@@ -16,39 +16,31 @@
           >
             <el-submenu index="1">
               <template slot="title">基础部分</template>
-              <el-menu-item index="/">响应式测试</el-menu-item>
-              <el-menu-item index="/test2">冒泡测试</el-menu-item>
-              <el-menu-item index="/test3">生命周期</el-menu-item>
-              <el-menu-item index="/test4">lazy修饰符测试</el-menu-item>
-              <el-menu-item index="/test5">非prop的attribute测试</el-menu-item>
-              <el-menu-item index="/test6">自定义事件名测试</el-menu-item>
-              <el-menu-item index="/test7">组件使用v-model</el-menu-item>
-              <el-menu-item index="/test8">.sync修饰符测试</el-menu-item>
-              <el-menu-item index="/test10">子传父测试</el-menu-item>
-              <el-menu-item index="/test14">tabs过渡测试</el-menu-item>
-              <el-menu-item index="/test15">tabs过渡测试2</el-menu-item>
+              <el-menu-item index="/">首页</el-menu-item>
+              <el-menu-item
+                v-for="item in baseNavInfo"
+                :key="item.name"
+                :index="item.path">
+                {{ item.title }}
+              </el-menu-item>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title">路由相关</template>
-              <el-menu-item index="/test9">路由缓存测试</el-menu-item>
-              <el-menu-item index="/test11">编程式路由导航</el-menu-item>
-              <el-menu-item index="/test12">滚动行为测试</el-menu-item>
-              <el-menu-item index="/test13">导航故障测试</el-menu-item>
+              <el-menu-item
+                v-for="item in routerNavInfo"
+                :key="item.name"
+                :index="item.path">
+                {{ item.title }}
+              </el-menu-item>
             </el-submenu>
             <el-submenu index="3">
-              <template slot="title">Vuex相关</template>
-              <el-menu-item-group>
-                <template slot="title">分组一</template>
-                <el-menu-item index="3-1">选项1</el-menu-item>
-                <el-menu-item index="3-2">选项2</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="分组2">
-                <el-menu-item index="3-3">选项3</el-menu-item>
-              </el-menu-item-group>
-              <el-submenu index="3-4">
-                <template slot="title">选项4</template>
-                <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-              </el-submenu>
+              <template slot="title">项目相关</template>
+              <el-menu-item
+                v-for="item in projectNavInfo"
+                :key="item.name"
+                :index="item.path">
+                {{ item.title }}
+              </el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>
@@ -61,10 +53,22 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
+
 export default {
   data() {
     return {
-      activeIndex: '/'
+      activeIndex: '/',
+      submenuIndex: ['1']
+    }
+  },
+  computed: {
+    ...mapGetters(['baseNavInfo', 'routerNavInfo', 'projectNavInfo']),
+    ...mapState(['routesInfo'])
+  },
+  watch: {
+    $route(newVal) {
+      this.activeIndex = newVal.path
     }
   },
   /* mounted() {
@@ -74,15 +78,63 @@ export default {
   updated() {
     // console.log(this.$route)
   } */
-  watch: {
-    $route(newVal) {
-      this.activeIndex = newVal.path
+  created() {
+    console.log('App created', this.$route)
+    console.log('App created', this.$route.path)
+  },
+  mounted() {
+    console.log('App mounted', this.$route)
+    console.log('App mounted', this.$route.path)
+    this.initRoute()
+  },
+  methods: {
+    initRoute() {
+      // 动态添加路由
+      this.routesInfo.forEach(item => {
+        // 封装路由信息对象
+        this.addRouteInfo(item)
+      })
+      // 添加404路由
+      this.$router.addRoute({
+        path: '*',
+        name: 'NotFound',
+        component: () => import('@/components/NotFound.vue')
+      })
+    },
+    addRouteInfo(item) {
+      this.packingRouteInfo(item)
+      if (item.children) {
+        item.children.forEach(ele => {
+          this.packingRouteInfo(ele, item.name)
+          // 判断是否有children
+          if (ele.children) {
+            this.addRouteInfo(ele.children)
+          }
+        })
+      }
+    },
+    packingRouteInfo(data, parentName) {
+      const obj = {
+        path: data.path,
+        name: data.name,
+        component: () => import(`@/views/${data.componentUrl}`)
+        // component: resolve => require([`@/${data.componentUrl}`], resolve)
+      }
+      if (data.mate) {
+        obj.meta = data.meta
+      }
+      if (data.props) {
+        obj.props = data.props
+      }
+      parentName ? this.$router.addRoute(parentName, obj) : this.$router.addRoute(obj)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import url('./assets/css/reset.css');
+
 #app {
   height: 100%;
   .title {
