@@ -1,4 +1,4 @@
-module.exports = {
+/* module.exports = {
   root: true,
   env: {
     node: true
@@ -15,4 +15,4 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'space-before-function-paren': 'off'
   }
-}
+} */

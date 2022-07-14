@@ -2,7 +2,8 @@
   <div class="container">
     <button @click="clickHandle">改变</button>
     <div class="box">
-      haha
+      {{ msg }} <hr>
+      {{ arr1 }}
     </div>
   </div>
 </template>
@@ -14,7 +15,8 @@ export default {
     return {
       msg: {
         a: 1
-      }
+      },
+      arr1: ['邮箱', '代理', 'QQ']
     }
   },
   watch: {
@@ -36,8 +38,7 @@ export default {
 </script>
 
 <style scoped>
-
-  .box {
-    min-width: 100px;
-  }
+.box {
+  min-width: 100px;
+}
 </style>

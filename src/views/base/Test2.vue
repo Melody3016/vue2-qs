@@ -6,6 +6,9 @@
 
 <script>
 export default ({
-  props: ['userId']
+  props: ['userId'],
+  mounted() {
+    console.log(this.$route)
+  }
 })
 </script>

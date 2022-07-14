@@ -185,6 +185,41 @@ export default new Vuex.Store({
         title: '路由懒加载信息获取',
         componentUrl: 'router/RouterInfo.vue',
         status: 2
+      },
+      {
+        path: '/fromValidator',
+        name: 'FromValidator',
+        title: 'element表格校验测试',
+        componentUrl: 'project/FromValidator.vue',
+        status: 3
+      },
+      {
+        path: '/mulTable',
+        name: 'MulTable',
+        title: '可筛选表头表格1',
+        componentUrl: 'project/MulTable.vue',
+        status: 3
+      },
+      {
+        path: '/mulTable2',
+        name: 'MulTable2',
+        title: '可筛选表头表格2',
+        componentUrl: 'project/MulTable2.vue',
+        status: 3
+      },
+      {
+        path: '/uploadImg',
+        name: 'UploadImg',
+        title: '上传图片功能',
+        componentUrl: 'project/UploadImg.vue',
+        status: 3
+      },
+      {
+        path: '/deviceCharts',
+        name: 'DeviceCharts',
+        title: '设备拓补图',
+        componentUrl: 'project/DeviceCharts.vue',
+        status: 3
       }
     ]
   },
