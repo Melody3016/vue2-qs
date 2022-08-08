@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@balkangraph/orgchart.js": "^8.4.2",
+    "amap-echarts": "^2.0.0",
     "core-js": "^3.6.5",
+    "echarts": "^4.2.1",
     "element-ui": "^2.15.6",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

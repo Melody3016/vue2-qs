@@ -220,6 +220,27 @@ export default new Vuex.Store({
         title: '设备拓补图',
         componentUrl: 'project/DeviceCharts.vue',
         status: 3
+      },
+      {
+        path: '/mapCharts',
+        name: 'MapCharts',
+        title: '地图图表',
+        componentUrl: 'project/MapCharts.vue',
+        status: 3
+      },
+      {
+        path: '/helloWorld',
+        name: 'HelloWorld',
+        title: '设备地图',
+        componentUrl: 'project/HelloWorld.vue',
+        status: 3
+      },
+      {
+        path: '/lineCharts',
+        name: 'LineCharts',
+        title: '折线图表',
+        componentUrl: 'project/LineCharts.vue',
+        status: 3
       }
     ]
   },

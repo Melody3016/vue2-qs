@@ -3,7 +3,7 @@ import {
   Tabs, TabPane, Container, Header, Aside, Main,
   Menu, Submenu, MenuItemGroup, MenuItem, Select, Option,
   Form, FormItem, Table, TableColumn, Input, Button, Card,
-  Dialog, Checkbox, Divider, CheckboxGroup, Upload
+  Dialog, Checkbox, Divider, CheckboxGroup, Upload, RadioGroup, RadioButton
 } from 'element-ui'
 
 import App from './App.vue'
@@ -35,6 +35,8 @@ Vue.use(Checkbox)
 Vue.use(Divider)
 Vue.use(CheckboxGroup)
 Vue.use(Upload)
+Vue.use(RadioGroup)
+Vue.use(RadioButton)
 
 new Vue({
   router,
