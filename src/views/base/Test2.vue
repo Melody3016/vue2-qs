@@ -1,10 +1,11 @@
 <template>
-  <div class="about">
+  <div class="about" style="height: 100%">
     <h1>{{ userId }}</h1>
   </div>
 </template>
 
 <script>
+
 export default ({
   props: ['userId'],
   mounted() {
@@ -12,3 +13,5 @@ export default ({
   }
 })
 </script>
+<style lang="scss">
+</style>

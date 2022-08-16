@@ -241,6 +241,27 @@ export default new Vuex.Store({
         title: '折线图表',
         componentUrl: 'project/LineCharts.vue',
         status: 3
+      },
+      {
+        path: '/infiniteScroll',
+        name: 'InfiniteScroll',
+        title: '无限滚动（原生）',
+        componentUrl: 'project/InfiniteScroll.vue',
+        status: 3
+      },
+      {
+        path: '/infiniteScroll2',
+        name: 'InfiniteScroll2',
+        title: '无限滚动（指令）',
+        componentUrl: 'project/InfiniteScroll2.vue',
+        status: 3
+      },
+      {
+        path: '/formVerify',
+        name: 'FormVerify',
+        title: '表单校验',
+        componentUrl: 'project/FormVerify.vue',
+        status: 3
       }
     ]
   },

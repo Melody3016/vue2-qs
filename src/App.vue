@@ -145,6 +145,9 @@ export default {
 .el-container, .el-menu{
   height: 100%;
 }
+.el-container {
+  overflow: hidden;
+}
 .el-header {
   background-color: #B3C0D1;
   color: #333;
@@ -158,5 +161,6 @@ export default {
   color: #333;
   text-align: center;
   height: 100%;
+  overflow: auto;
 }
 </style>

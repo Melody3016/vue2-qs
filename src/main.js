@@ -1,9 +1,11 @@
 import Vue from 'vue'
+import infiniteScroll from 'vue-infinite-scroll'
 import {
   Tabs, TabPane, Container, Header, Aside, Main,
   Menu, Submenu, MenuItemGroup, MenuItem, Select, Option,
   Form, FormItem, Table, TableColumn, Input, Button, Card,
-  Dialog, Checkbox, Divider, CheckboxGroup, Upload, RadioGroup, RadioButton
+  Dialog, Checkbox, Divider, CheckboxGroup, Upload, RadioGroup, RadioButton,
+  Col, DatePicker, TimePicker, Switch, Radio
 } from 'element-ui'
 
 import App from './App.vue'
@@ -37,6 +39,12 @@ Vue.use(CheckboxGroup)
 Vue.use(Upload)
 Vue.use(RadioGroup)
 Vue.use(RadioButton)
+Vue.use(Col)
+Vue.use(DatePicker)
+Vue.use(TimePicker)
+Vue.use(Switch)
+Vue.use(Radio)
+Vue.use(infiniteScroll)
 
 new Vue({
   router,
