@@ -13,8 +13,7 @@
           :http-request="httpResHandler"
           :before-upload="beforeAvatarUpload"
           :on-preview="handlePreview"
-          :on-progress="handleProgress"
-          :auto-upload="true">
+          :on-progress="handleProgress">
           <i slot="default" class="el-icon-plus"></i>
           <div slot="file" slot-scope="{file}">
             <img
