@@ -5,7 +5,7 @@ import {
   Menu, Submenu, MenuItemGroup, MenuItem, Select, Option,
   Form, FormItem, Table, TableColumn, Input, Button, Card,
   Dialog, Checkbox, Divider, CheckboxGroup, Upload, RadioGroup, RadioButton,
-  Col, DatePicker, TimePicker, Switch, Radio
+  Col, DatePicker, TimePicker, Switch, Radio, Message
 } from 'element-ui'
 
 import App from './App.vue'
@@ -45,6 +45,8 @@ Vue.use(TimePicker)
 Vue.use(Switch)
 Vue.use(Radio)
 Vue.use(infiniteScroll)
+
+Vue.prototype.$message = Message
 
 new Vue({
   router,

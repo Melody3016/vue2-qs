@@ -6,8 +6,14 @@
       </div>
       <div>
         <el-upload
-          action="/upload"
+          action="#"
+          ref="upload"
           list-type="picture-card"
+          :file-list="fileList"
+          :http-request="httpResHandler"
+          :before-upload="beforeAvatarUpload"
+          :on-preview="handlePreview"
+          :on-progress="handleProgress"
           :auto-upload="true">
           <i slot="default" class="el-icon-plus"></i>
           <div slot="file" slot-scope="{file}">
@@ -39,6 +45,7 @@
             </span>
           </div>
         </el-upload>
+        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
@@ -48,24 +55,50 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
-      disabled: false
+      disabled: false,
+      fileList: []
     }
   },
   methods: {
+    httpResHandler() {
+      console.log('httpResHandler')
+    },
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+    handleProgress(file) {
+      console.log(file, 'handleProgress')
+    },
+    handlePreview(file) {
+      console.log(file, 'handlePreview')
+    },
     handleRemove(file) {
-      console.log(file)
+      console.log(file, 'handleRemove')
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
     handleDownload(file) {
-      console.log(file)
+      console.log(file, 'handleDownload')
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
   }
 }
