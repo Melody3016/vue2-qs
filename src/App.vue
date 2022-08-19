@@ -108,7 +108,9 @@ export default {
           this.packingRouteInfo(ele, item.name)
           // 判断是否有children
           if (ele.children) {
-            this.addRouteInfo(ele.children)
+            ele.children.forEach(e => {
+              this.addRouteInfo(e)
+            })
           }
         })
       }

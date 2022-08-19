@@ -14,6 +14,8 @@ export default {
       // this.$router.push('test9/test91')
       // this.$router.push('/test9/test91')
       // this.$router.push({ path: 'test9/test91' })
+      // this.$router.push({ path: 'test9/test92/12' })
+      this.$router.push({ path: 'test14' })
       // this.$router.push({ path: '/test9/test91' })
       // this.$router.push({ name: 'Test2' })
       // const result = this.$router.push({ path: 'test11' },
@@ -25,14 +27,13 @@ export default {
       //   }
       // )
       // console.log(result)
-      this.$router.push({ name: 'Test2', params: { userId: 123 } })
+      // this.$router.push({ name: 'Test2', params: { userId: 123 } })
     }
   }
 }
 </script>
 
 <style scoped>
-
   .box {
     min-width: 100px;
   }

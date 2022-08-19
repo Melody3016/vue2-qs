@@ -7,6 +7,27 @@
       label-width="100px"
       class="demo-ruleForm"
     >
+      <el-form-item label="数据类型" prop="dataType">
+        <el-select v-model="ruleForm.dataType" placeholder="请选择">
+          <el-option v-for="item in dataTypeArray" :key="item.name" :label="item.name" :value="item.value"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="取值范围">
+        <el-col :span="11">
+          <el-form-item label="" prop="minValue">
+            <el-input v-model="ruleForm.minValue"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col class="line" :span="2">-</el-col>
+        <el-col :span="11">
+          <el-form-item label="" prop="maxValue">
+            <el-input v-model="ruleForm.maxValue"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="步长" prop="step">
+        <el-input v-model="ruleForm.step"></el-input>
+      </el-form-item>
       <el-form-item label="数据长度" prop="dataLen">
         <el-input v-model="ruleForm.dataLen">
           <template slot="append">字节</template>
@@ -68,16 +89,21 @@
 </template>
 
 <script>
+import { checkDataLen, validValueRange, validValueRangeMin, validValueRangeMax, validStep } from '@/util/validators'
+
 export default {
   data() {
-    const checkDataLen = (rule, value, callback) => {
-      if(/^[1-9][0-9]*$/.test(value)) {
-        callback()
-      } else {
-        callback(new Error('只能输入正整数'))
-      }
-    }
     return {
+      dataTypeArray: [
+        {
+          name: 'Int',
+          value: 'int'
+        },
+        {
+          name: 'Float',
+          value: 'float'
+        }
+      ],
       ruleForm: {
         dataLen: '',
         name: '',
@@ -87,9 +113,61 @@ export default {
         delivery: false,
         type: [],
         resource: '',
-        desc: ''
+        desc: '',
+        minValue: '',
+        maxValue: '',
+        step: '',
+        dataType: ''
       },
       rules: {
+        dataType: [
+          {
+            required: true,
+            message: '请选择',
+            trigger: ['blur', 'change']
+          }
+        ],
+        minValue: [
+          {
+            required: true,
+            message: '请填写',
+            trigger: ['blur', 'change']
+          },
+          {
+            validator: validValueRange.bind(this),
+            trigger: ['blur', 'change']
+          },
+          {
+            validator: validValueRangeMin.bind(this),
+            trigger: ['blur']
+          }
+        ],
+        maxValue: [
+          {
+            required: true,
+            message: '请填写',
+            trigger: ['blur', 'change']
+          },
+          {
+            validator: validValueRange.bind(this),
+            trigger: ['blur', 'change']
+          },
+          {
+            validator: validValueRangeMax.bind(this),
+            trigger: ['blur']
+          }
+        ],
+        step: [
+          {
+            required: false,
+            message: '请填写',
+            trigger: ['blur', 'change']
+          },
+          {
+            validator: validStep.bind(this),
+            trigger: ['blur', 'change']
+          }
+        ],
         dataLen: [
           { required: true, message: '请输入数据长度', trigger: 'blur' },
           { validator: checkDataLen, trigger: 'blur' }
@@ -157,9 +235,11 @@ export default {
   background: white;
   padding: 20px;
   text-align: left;
-
   .demo-ruleForm {
     width: 460px;
+    .line {
+      text-align: center;
+    }
   }
 }
 </style>
