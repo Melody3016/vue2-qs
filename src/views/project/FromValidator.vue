@@ -136,48 +136,48 @@ export default {
   },
   data() {
     const validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      if (value === '') {
+        callback(new Error('请输入密码'))
       } else {
-        if (this.ruleForm.surePassWord !== "") {
-          this.$refs.ruleForm.validateField("surePassWord");
+        if (this.ruleForm.surePassWord !== '') {
+          this.$refs.ruleForm.validateField('surePassWord')
         }
-        callback();
+        callback()
       }
     }
     const validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      if (value === '') {
+        callback(new Error('请输入密码'))
       } else if (value !== this.ruleForm.passWord) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error('两次输入密码不一致!'))
       } else {
-        callback();
+        callback()
       }
     }
-    const itemFromValidate = (rule, value, callback) => {
-      console.log(value)
-      if (value.productName.length === 0) {
-        callback(new Error("请选择业务"))
-      } else if (value.roleName === '') {
-        callback(new Error("请选择角色"))
-      } else {
-        callback();
-      }
-    }
+    // const itemFromValidate = (rule, value, callback) => {
+    //   console.log(value)
+    //   if (value.productName.length === 0) {
+    //     callback(new Error('请选择业务'))
+    //   } else if (value.roleName === '') {
+    //     callback(new Error('请选择角色'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     return {
       dialogVisible: false,
       ruleForm: {
-        customerName: '', //客户名称
-        passWord: '', //密码
-        surePassWord: '', //确认密码
+        customerName: '', // 客户名称
+        passWord: '', // 密码
+        surePassWord: '', // 确认密码
         itemFrom: [
           {
             productName: [],
             roleName: '',
-          },
+          }
         ]
       },
-      roleList: [ //角色集合
+      roleList: [ // 角色集合
         {
           value: 'manager',
           label: '管理员',
@@ -208,26 +208,26 @@ export default {
       eyeType2: 'el-icon-view',
       pwdType: 'password',
       pwdType2: 'password',
-      businessList: [] //所属业务集合
+      businessList: [] // 所属业务集合
     }
   },
   methods: {
     changeType() {
-      this.pwdType = this.pwdType === "password" ? "text" : "password";
-      this.eyeType = this.eyeType === "el-icon-view" ? "el-icon-view" : "";
+      this.pwdType = this.pwdType === 'password' ? 'text' : 'password'
+      this.eyeType = this.eyeType === 'el-icon-view' ? 'el-icon-view' : ''
     },
     changeType2() {
-      this.pwdType2 = this.pwdType2 === "password" ? "text" : "password";
-      this.eyeType2 = this.eyeType2 === "el-icon-view" ? "el-icon-view" : "";
+      this.pwdType2 = this.pwdType2 === 'password' ? 'text' : 'password'
+      this.eyeType2 = this.eyeType2 === 'el-icon-view' ? 'el-icon-view' : ''
     },
-    //获取所属业务列表
+    // 获取所属业务列表
     getList() {
-      // const that = this;
+      // const that = this
       // products(that.listQuery)
       //   .then((res) => {
-      //     this.businessList = res.data.list.items;
+      //     this.businessList = res.data.list.items
       //   })
-      //   .catch(() => {});
+      //   .catch(() => {})
       this.businessList = [
         {
           username: 'ceshi',
@@ -253,27 +253,27 @@ export default {
       ]
     },
 
-    //点击添加
+    // 点击添加
     addRole() {
       this.ruleForm.itemFrom.push({
         productName: [],
-        roleName: "",
-      });
+        roleName: '',
+      })
     },
 
-    //点击删除
+    // 点击删除
     delePortMapping(row) {
       this.ruleForm.itemFrom.forEach((item, index) => {
         if (item == row) {
-          this.ruleForm.itemFrom.splice(index, 1);
+          this.ruleForm.itemFrom.splice(index, 1)
         }
-      });
+      })
     },
 
-    //校验表单
+    // 校验表单
     async validation() {
       try {
-        return this.$refs["ruleForm"].validate()
+        return this.$refs['ruleForm'].validate()
       } catch (error) {
         return false
       }
@@ -281,7 +281,7 @@ export default {
 
     // 提交表单
     submitFrom() {
-      this.$refs["ruleForm"].validate((boolean, object) => {
+      this.$refs['ruleForm'].validate((boolean, object) => {
         console.log(boolean, object)
         console.log(this.ruleForm)
       })

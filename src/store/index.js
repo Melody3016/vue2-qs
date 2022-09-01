@@ -222,20 +222,6 @@ export default new Vuex.Store({
         status: 3
       },
       {
-        path: '/mapCharts',
-        name: 'MapCharts',
-        title: '地图图表',
-        componentUrl: 'project/MapCharts.vue',
-        status: 3
-      },
-      {
-        path: '/helloWorld',
-        name: 'HelloWorld',
-        title: '设备地图',
-        componentUrl: 'project/HelloWorld.vue',
-        status: 3
-      },
-      {
         path: '/lineCharts',
         name: 'LineCharts',
         title: '折线图表',
@@ -261,6 +247,20 @@ export default new Vuex.Store({
         name: 'FormVerify',
         title: '表单校验',
         componentUrl: 'project/FormVerify.vue',
+        status: 3
+      },
+      {
+        path: '/imgLazyLoad',
+        name: 'ImgLazyLoad',
+        title: '图片懒加载（原生）',
+        componentUrl: 'project/ImgLazyLoad.vue',
+        status: 3
+      },
+      {
+        path: '/imgLazyLoad2',
+        name: 'ImgLazyLoad2',
+        title: '图片懒加载（插件）',
+        componentUrl: 'project/ImgLazyLoad2.vue',
         status: 3
       }
     ]

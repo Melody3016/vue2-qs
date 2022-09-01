@@ -23,13 +23,13 @@ export default {
         { id: 7, pid: 4, name: 'Fran Parsons1', title: 'Developer', img: 'https://cdn.balkan.app/shared/8.jpg' },
         { id: 8, pid: 3, name: 'Fran Parsons2', title: 'Developer', img: 'https://cdn.balkan.app/shared/9.jpg' },
         { id: 9, pid: 3, name: 'Fran Parsons3', title: 'Developer', img: 'https://cdn.balkan.app/shared/10.jpg' },
-        { id: 10, pid: 8, name: 'Fran Parsons4', title: 'Developer', img: 'https://cdn.balkan.app/shared/11.jpg' },
+        { id: 10, pid: 8, name: 'Fran Parsons4', title: 'Developer', img: 'https://cdn.balkan.app/shared/11.jpg' }
       ]
     }
   },
 
   watch: {
-    //设备功能里面的选项卡
+    // 设备功能里面的选项卡
     /* nodesData: {
       handler(newVal, oldVal) {
         if (newVal) {
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     /* nodesDataPress(nodesData) {
-      let arr = []  
+      let arr = []
       if (nodesData.items.length > 0) {
         nodesData.items.forEach((element) => {
           element.pid = element.parentName
@@ -86,7 +86,7 @@ export default {
           field_0: 'name',
           field_1: 'title',
           // img_0: 'picURL'
-          img_0: "img"
+          img_0: 'img'
         },
         menu: {
           pdf: { text: 'Export PDF' },
@@ -96,7 +96,7 @@ export default {
         },
         toolbar: {
           zoom: true,
-          layout: true, //排列方式变化
+          layout: true, // 排列方式变化
           fit: true,
           fullScreen: false
         },
@@ -111,12 +111,12 @@ export default {
 
       OrgChart.toolbarUI.zoomInIcon = `<img width="24" src='${image1}' />`
       OrgChart.toolbarUI.zoomOutIcon = `<img width="24" src='${image1}' />`
-      OrgChart.toolbarUI.fitIcon = `<img width="24" src='${image1}' />` //适配整个屏幕  最好的比例
-      OrgChart.toolbarUI.layoutIcon = `<img width="24" src='${image1}' />` //排列方式变化
+      OrgChart.toolbarUI.fitIcon = `<img width="24" src='${image1}' />` // 适配整个屏幕  最好的比例
+      OrgChart.toolbarUI.layoutIcon = `<img width="24" src='${image1}' />` // 排列方式变化
       OrgChart.toolbarUI.fullScreenIcon = `<img width="24" src='${image1}' />`
 
       OrgChart.templates.grey = Object.assign({}, OrgChart.templates.ana)
-      OrgChart.templates.grey.size = [200, 210] //一个模块的大小
+      OrgChart.templates.grey.size = [200, 210] // 一个模块的大小
       OrgChart.templates.grey.node =
         '<rect x="10" y="0" rx="5" ry="5" height="172" width="200" fill="#ffffff" ></rect>' +
         '<path d="M82,70 C82,50 118,50 118,70" stroke="#757575" stroke-width="1" fill="#757575"></path>'

@@ -15,16 +15,21 @@ export default ({
       list: [],
       box: [],
       num: 25,
-      isLoading: true
+      isLoading: true,
+      isReady: false
     }
   },
   methods: {
     initList(nums) {
-      for (let index = 1; index <= nums; index++) {
-        this.list.push({
-          name: '你好' + index
-        })
-      }
+      setTimeout(() => {
+        for (let index = 1; index <= nums; index++) {
+          this.list.push({
+            name: '你好' + index
+          })
+        }
+        this.box = this.list.slice(0, 25)
+        this.isReady = true
+      }, 2000)
     },
     loadMore() {
       // 全部加载完毕，不再显示loading
@@ -39,11 +44,11 @@ export default ({
   },
   mounted() {
     this.initList(100)
-    this.box = this.list.slice(0, 5)
+    // this.box = this.list.slice(0, 5)
     // 观察loading元素是否出现在视口
     const obj = new IntersectionObserver((entires) => {
       const entry = entires[0]
-      if (entry.isIntersecting) {
+      if (entry.isIntersecting && this.isReady) {
         this.loadMore()
       }
     }, {
