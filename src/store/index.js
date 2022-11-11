@@ -262,6 +262,13 @@ export default new Vuex.Store({
         title: '图片懒加载（插件）',
         componentUrl: 'project/ImgLazyLoad2.vue',
         status: 3
+      },
+      {
+        path: '/dynamicVerify',
+        name: 'DynamicVerify',
+        title: '动态输入框校验',
+        componentUrl: 'project/DynamicVerify.vue',
+        status: 3
       }
     ]
   },
