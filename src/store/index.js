@@ -269,6 +269,13 @@ export default new Vuex.Store({
         title: '动态输入框校验',
         componentUrl: 'project/DynamicVerify.vue',
         status: 3
+      },
+      {
+        path: '/uploadTest',
+        name: 'UploadTest',
+        title: '上传组件',
+        componentUrl: 'project/UploadTest.vue',
+        status: 3
       }
     ]
   },
