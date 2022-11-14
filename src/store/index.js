@@ -276,6 +276,13 @@ export default new Vuex.Store({
         title: '上传组件',
         componentUrl: 'project/UploadTest.vue',
         status: 3
+      },
+      {
+        path: '/propWatch',
+        name: 'PropWatch',
+        title: '父传子监听和读取值',
+        componentUrl: 'project/PropWatch.vue',
+        status: 3
       }
     ]
   },
