@@ -4,7 +4,8 @@ import {
   Menu, Submenu, MenuItemGroup, MenuItem, Select, Option,
   Form, FormItem, Table, TableColumn, Input, Button, Card,
   Dialog, Checkbox, Divider, CheckboxGroup, Upload, RadioGroup, RadioButton,
-  Col, DatePicker, TimePicker, Switch, Radio, Message
+  Col, DatePicker, TimePicker, Switch, Radio, Message, Loading, Collapse, CollapseItem,
+  Image
 } from 'element-ui'
 
 Vue.use(Tabs)
@@ -38,5 +39,10 @@ Vue.use(DatePicker)
 Vue.use(TimePicker)
 Vue.use(Switch)
 Vue.use(Radio)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
+Vue.use(Image)
+Vue.use(Loading.directive)
 
 Vue.prototype.$message = Message
+Vue.prototype.$loading = Loading.service

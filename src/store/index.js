@@ -283,6 +283,13 @@ export default new Vuex.Store({
         title: '父传子监听和读取值',
         componentUrl: 'project/PropWatch.vue',
         status: 3
+      },
+      {
+        path: '/paperProducts',
+        name: 'paperProducts',
+        title: '入驻产品编辑（项目）',
+        componentUrl: 'project/paperProducts.vue',
+        status: 3
       }
     ]
   },
