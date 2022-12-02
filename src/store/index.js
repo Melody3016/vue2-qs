@@ -290,6 +290,13 @@ export default new Vuex.Store({
         title: '入驻产品编辑（项目）',
         componentUrl: 'project/paperProducts.vue',
         status: 3
+      },
+      {
+        path: '/watchTest',
+        name: 'WatchTest',
+        title: 'watch测试',
+        componentUrl: 'base/WatchTest.vue',
+        status: 1
       }
     ]
   },
