@@ -297,6 +297,13 @@ export default new Vuex.Store({
         title: 'watch测试',
         componentUrl: 'base/WatchTest.vue',
         status: 1
+      },
+      {
+        path: '/residenceTime',
+        name: 'ResidenceTime',
+        title: '页面停留时间功能',
+        componentUrl: 'project/ResidenceTime.vue',
+        status: 3
       }
     ]
   },
