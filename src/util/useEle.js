@@ -5,7 +5,7 @@ import {
   Form, FormItem, Table, TableColumn, Input, Button, Card,
   Dialog, Checkbox, Divider, CheckboxGroup, Upload, RadioGroup, RadioButton,
   Col, DatePicker, TimePicker, Switch, Radio, Message, Loading, Collapse, CollapseItem,
-  Image
+  Image, Row, Skeleton, SkeletonItem
 } from 'element-ui'
 
 Vue.use(Tabs)
@@ -42,6 +42,9 @@ Vue.use(Radio)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
 Vue.use(Image)
+Vue.use(Row)
+Vue.use(Skeleton)
+Vue.use(SkeletonItem)
 Vue.use(Loading.directive)
 
 Vue.prototype.$message = Message

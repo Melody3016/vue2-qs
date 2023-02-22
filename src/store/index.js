@@ -318,6 +318,13 @@ export default new Vuex.Store({
         title: '商品选项',
         componentUrl: 'project/ProductOptions.vue',
         status: 3
+      },
+      {
+        path: '/downloadAndPreview',
+        name: 'DownloadAndPreview',
+        title: '文件下载和预览',
+        componentUrl: 'project/DownloadAndPreview.vue',
+        status: 3
       }
     ]
   },

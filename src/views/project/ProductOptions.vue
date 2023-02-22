@@ -89,6 +89,7 @@ export default {
   methods: {
     // 转换数据
     convertData() {
+      this.btnInfos = []
       this.allAttr.forEach((item, index) => {
         item.values.forEach(value => {
           this.btnInfos.push({
