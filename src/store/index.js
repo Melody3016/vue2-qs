@@ -325,6 +325,13 @@ export default new Vuex.Store({
         title: '文件下载和预览',
         componentUrl: 'project/DownloadAndPreview.vue',
         status: 3
+      },
+      {
+        path: '/imageUpload',
+        name: 'ImageUpload',
+        title: '图片上传（彻底弄清）',
+        componentUrl: 'project/ImageUpload.vue',
+        status: 3
       }
     ]
   },
