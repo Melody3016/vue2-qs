@@ -304,6 +304,20 @@ export default new Vuex.Store({
         title: '页面停留时间功能',
         componentUrl: 'project/ResidenceTime.vue',
         status: 3
+      },
+      {
+        path: '/doc',
+        name: 'Doc',
+        title: 'vue文档问题',
+        componentUrl: 'base/Doc.vue',
+        status: 1
+      },
+      {
+        path: '/productOptions',
+        name: 'ProductOptions',
+        title: '商品选项',
+        componentUrl: 'project/ProductOptions.vue',
+        status: 3
       }
     ]
   },
