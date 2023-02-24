@@ -332,6 +332,13 @@ export default new Vuex.Store({
         title: '图片上传（彻底弄清）',
         componentUrl: 'project/ImageUpload.vue',
         status: 3
+      },
+      {
+        path: '/searchTransfer',
+        name: 'SearchTransfer',
+        title: '条件筛选的穿梭框',
+        componentUrl: 'project/SearchTransfer.vue',
+        status: 3
       }
     ]
   },
