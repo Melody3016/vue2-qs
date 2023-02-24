@@ -54,7 +54,11 @@
             <el-form-item
               class="business"
               :prop="`itemFrom[${$index}].productName`"
-              :rules="{ required: true, message: '请选择业务', trigger: 'change' }"
+              :rules="{
+                required: true,
+                message: '请选择业务',
+                trigger: 'change'
+              }"
             >
               <el-select
                 v-model="row.productName"
@@ -80,9 +84,14 @@
             <span class="title">角色</span>
           </template>
           <template #default="{ row, $index }">
-            <el-form-item class="business"
+            <el-form-item
+              class="business"
               :prop="`itemFrom[${$index}].roleName`"
-              :rules="{ required: true, message: '请选择角色', trigger: 'change' }"
+              :rules="{
+                required: true,
+                message: '请选择角色',
+                trigger: 'change'
+              }"
             >
               <el-select
                 class="add-input"
@@ -173,35 +182,36 @@ export default {
         itemFrom: [
           {
             productName: [],
-            roleName: '',
+            roleName: ''
           }
         ]
       },
-      roleList: [ // 角色集合
+      roleList: [
+        // 角色集合
         {
           value: 'manager',
-          label: '管理员',
+          label: '管理员'
         },
         {
           value: 'maintainer',
-          label: '维护者',
+          label: '维护者'
         },
         {
           value: 'developer',
-          label: '开发者',
+          label: '开发者'
         },
         {
           value: 'visitor',
-          label: '访客',
+          label: '访客'
         }
-      ], 
+      ],
       rules: {
         customerName: [{ required: true, message: '请输入用户名' }],
         passWord: [
-          { required: true, validator: validatePass, trigger: 'blur' },
+          { required: true, validator: validatePass, trigger: 'blur' }
         ],
         surePassWord: [
-          { required: true, validator: validatePass2, trigger: 'blur' },
+          { required: true, validator: validatePass2, trigger: 'blur' }
         ]
       },
       eyeType: 'el-icon-view',
@@ -257,14 +267,14 @@ export default {
     addRole() {
       this.ruleForm.itemFrom.push({
         productName: [],
-        roleName: '',
+        roleName: ''
       })
     },
 
     // 点击删除
     delePortMapping(row) {
       this.ruleForm.itemFrom.forEach((item, index) => {
-        if (item == row) {
+        if (item === row) {
           this.ruleForm.itemFrom.splice(index, 1)
         }
       })
@@ -273,7 +283,7 @@ export default {
     // 校验表单
     async validation() {
       try {
-        return this.$refs['ruleForm'].validate()
+        return this.$refs.ruleForm.validate()
       } catch (error) {
         return false
       }
@@ -281,7 +291,7 @@ export default {
 
     // 提交表单
     submitFrom() {
-      this.$refs['ruleForm'].validate((boolean, object) => {
+      this.$refs.ruleForm.validate((boolean, object) => {
         console.log(boolean, object)
         console.log(this.ruleForm)
       })
@@ -304,11 +314,11 @@ export default {
             roleName: 'maintainer'
           }
         ]
-      }  
+      }
       this.ruleForm.passWord = newVal.password
       this.ruleForm.customerName = newVal.username
       this.ruleForm.itemFrom = []
-      newVal.items.forEach((el) => {
+      newVal.items.forEach(el => {
         this.ruleForm.itemFrom.push(el)
       })
     }
@@ -333,11 +343,11 @@ export default {
             roleName: 'maintainer'
           }
         ]
-      }  
+      }
       this.ruleForm.passWord = newVal.password
       this.ruleForm.customerName = newVal.username
       this.ruleForm.itemFrom = []
-      newVal.items.forEach((el) => {
+      newVal.items.forEach(el => {
         this.ruleForm.itemFrom.push(el)
       })
     }
@@ -348,15 +358,15 @@ export default {
         console.log(id, value)
         let flag = false
         this.ruleForm.itemFrom.forEach(item => {
-          if(item.productName.find(ele => ele === id)){
+          if (item.productName.find(ele => ele === id)) {
             flag = true
           }
         })
-        if(value.find(ele => ele === id)) flag = false
+        if (value.find(ele => ele === id)) flag = false
         return flag
       }
     }
-  },
+  }
 }
 </script>
 
