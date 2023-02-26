@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@balkangraph/orgchart.js": "^8.4.2",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^1.0.2",
     "amap-echarts": "^2.0.0",
     "core-js": "^3.6.5",
     "echarts": "^4.2.1",

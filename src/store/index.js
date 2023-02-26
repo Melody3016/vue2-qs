@@ -346,6 +346,13 @@ export default new Vuex.Store({
         title: 'H5拖拽排序',
         componentUrl: 'project/DragEvent.vue',
         status: 3
+      },
+      {
+        path: '/wangeditor',
+        name: 'Wangeditor',
+        title: '富文本编辑器',
+        componentUrl: 'project/Wangeditor.vue',
+        status: 3
       }
     ]
   },
