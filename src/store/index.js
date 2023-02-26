@@ -339,6 +339,13 @@ export default new Vuex.Store({
         title: '条件筛选的穿梭框',
         componentUrl: 'project/SearchTransfer.vue',
         status: 3
+      },
+      {
+        path: '/dragEvent',
+        name: 'DragEvent',
+        title: 'H5拖拽排序',
+        componentUrl: 'project/DragEvent.vue',
+        status: 3
       }
     ]
   },
