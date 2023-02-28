@@ -2,20 +2,22 @@
   <div class="container">
     <el-card class="box-card">
       <template #header>H5拖拽排序</template>
+      <el-switch v-model="obj.isOpen"></el-switch>
       <div class="content">
         <transition-group>
           <div
             class="item"
-            draggable="true"
             v-for="(item, index) in list" :key="item.id"
-            @dragstart="dragstartHandler(index)"
+            @dragstart="dragstartHandler($event, index)"
             @dragenter="dragenterHandler($event, index)"
             @dragover="dragoverHandler($event)"
             @dragend="dragendHandler(index)"
           >
             <i class="el-icon-info"></i>
             <span>{{ item.id }} --- {{ item.value }}</span>
-            <div class="drag" >
+            <div class="drag"
+              draggable="true"
+            >
               <i class="el-icon-rank"></i>
             </div>
           </div>
@@ -29,6 +31,9 @@
 export default {
   data() {
     return {
+      obj: {
+        isOpen: true
+      },
       list: [
         { id: 1, value: '用户管理' },
         { id: 2, value: '菜单管理' },
@@ -49,7 +54,10 @@ export default {
     }
   },
   methods: {
-    dragstartHandler(index) {
+    dragstartHandler(e, index) {
+      console.log(e)
+      // 将父元素设置为draggable
+      // e.target.parentNode.setAttribute('draggable', true)
       // 设置拖拽元素开始的索引
       this.startIndex = index
     },
@@ -104,7 +112,8 @@ export default {
         clearTimeout(this.timeId)
       }
       this.timeId = setTimeout(() => {
-        const isSuccess = parseInt(Math.random() * 100) % 2
+        // const isSuccess = parseInt(Math.random() * 100) % 2
+        const isSuccess = true
         if (isSuccess) {
           // 模拟成功
           console.log('发送请求', this.list.map(item => item.id))
@@ -117,7 +126,7 @@ export default {
             this.list = this.backList.slice()
           }, 500)
         }
-      }, 1000)
+      }, 1500)
     /* if (!this.isSort) return
       if (this.timeId2 !== -1) {
         // 防抖
@@ -137,7 +146,7 @@ export default {
   min-width: 500px;
   text-align: left;
   .content {
-
+    margin: 20px;
     .item {
       width: 150px;
       padding: 5px 15px;

@@ -343,8 +343,15 @@ export default new Vuex.Store({
       {
         path: '/dragEvent',
         name: 'DragEvent',
-        title: 'H5拖拽排序',
+        title: 'H5原生拖拽排序',
         componentUrl: 'project/DragEvent.vue',
+        status: 3
+      },
+      {
+        path: '/vuedraggable',
+        name: 'Vuedraggable',
+        title: '第三方库拖拽排序',
+        componentUrl: 'project/Vuedraggable.vue',
         status: 3
       },
       {
