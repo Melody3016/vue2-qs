@@ -11,7 +11,7 @@
             @dragstart="dragstartHandler($event, index)"
             @dragenter="dragenterHandler($event, index)"
             @dragover="dragoverHandler($event)"
-            @dragend="dragendHandler(index)"
+            @drop="dropHandler(index)"
           >
             <i class="el-icon-info"></i>
             <span>{{ item.id }} --- {{ item.value }}</span>
@@ -49,13 +49,12 @@ export default {
         { id: 5, value: '商品管理' }
       ],
       startIndex: -1,
-      endIndex: -1,
       timeId: -1
     }
   },
   methods: {
     dragstartHandler(e, index) {
-      console.log(e)
+      // console.log(e)
       // 将父元素设置为draggable
       // e.target.parentNode.setAttribute('draggable', true)
       // 设置拖拽元素开始的索引
@@ -65,7 +64,7 @@ export default {
     // 因此，我们要在这两个拖放事件中使用preventDefault来阻止浏览器的默认行为
     dragenterHandler(e, index) {
       // console.log('enter', index)
-      this.endIndex = index
+      // this.endIndex = index
       e.preventDefault()
     /*       let dragEndIndex = index
       // 被拖拽目标和拖拽目标为同一元素，不进行操作
@@ -92,15 +91,15 @@ export default {
     dragoverHandler(e) {
       e.preventDefault()
     },
-    dragendHandler(index) {
-      console.log('end', this.startIndex, this.endIndex, index)
+    dropHandler(index) {
+      console.log('开始索引：', this.startIndex, '结束索引：', index)
       // 无需进行排序
-      if (this.startIndex === this.endIndex) return
+      if (this.startIndex === index) return
       // 先本地排序，再发送请求
-      if (this.endIndex < this.startIndex) {
-        [this.endIndex, this.startIndex] = [this.startIndex, this.endIndex]
+      if (index < this.startIndex) {
+        [index, this.startIndex] = [this.startIndex, index]
       }
-      const target = this.list.splice(this.endIndex, 1)[0]
+      const target = this.list.splice(index, 1)[0]
       // console.log(this.list[0].value, this.list[1].value)
       // console.log(this.list, 'this.list')
       this.list.splice(this.startIndex, 0, target)
