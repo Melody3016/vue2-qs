@@ -360,6 +360,13 @@ export default new Vuex.Store({
         title: '富文本编辑器',
         componentUrl: 'project/Wangeditor.vue',
         status: 3
+      },
+      {
+        path: '/aliUpload',
+        name: 'AliUpload',
+        title: '阿里云文件上传',
+        componentUrl: 'project/AliUpload.vue',
+        status: 3
       }
     ]
   },
