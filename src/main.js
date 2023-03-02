@@ -7,13 +7,12 @@ import router from './router'
 import store from './store'
 import element from './util/useEle'
 
-Vue.config.productionTip = false
 Vue.use(infiniteScroll)
 Vue.use(element)
-// or with options
+
+// 图片懒加载
 const loadImage = require('./assets/images/loading.gif')
 const errorImage = require('./assets/images/error.png')
-
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: errorImage,

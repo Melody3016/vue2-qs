@@ -3,26 +3,48 @@
     <!-- 文件拖拽上传区域 -->
     <div class="drag-upload">
       <div><i class="el-icon-upload"></i>将目录或多个文件拖拽到此进行扫描</div>
-      <div>支持的文件类型：.jpg .jpeg .bmp .webp .gif .png</div>
-      <div>每个文件允许的最大尺寸： 1MB</div>
+      <div>每个文件允许的最大尺寸： 10MB</div>
     </div>
+    <input
+      ref="fileUpload"
+      type="file"
+      class="ipt-upload"
+      title=""
+      multiple
+      @change="uploadChange"
+    />
+    <input
+      ref="directoryUpload"
+      type="file"
+      class="ipt-upload"
+      title=""
+      multiple
+      webkitdirectory
+      @change="uploadChange"
+    />
     <!-- 点击按钮上传区域 -->
     <div class="btn-upload">
-      <el-button type="primary">选择文件</el-button>
-      <el-button type="primary">选择文件夹</el-button>
+      <el-button type="primary" @click="clickUpload(false)">选择文件</el-button>
+      <el-button type="primary" @click="clickUpload(true)"
+        >选择文件夹</el-button
+      >
     </div>
     <!-- 上传文件信息表格 -->
     <el-table
       class="table-upload"
       cell-class-name="table-cell"
-      :data="uploadInfo"
+      :data="tableData"
       :border="true"
       style="width: 100%"
       max-height="330"
     >
       <el-table-column prop="filename" label="文件名"></el-table-column>
       <el-table-column prop="filetype" label="类型"></el-table-column>
-      <el-table-column prop="filesize" label="大小" :formatter="filesizeFormatter"></el-table-column>
+      <el-table-column
+        prop="filesize"
+        label="大小"
+        :formatter="cellFormatter"
+      ></el-table-column>
       <el-table-column prop="status" label="状态">
         <template #default="{ row }">
           <el-tag v-if="row.status === 0">待上传</el-tag>
@@ -69,16 +91,18 @@
     <div class="tags">
       <el-tag type="info">文件数量：{{ fileNum }}</el-tag>
       <el-tag type="success">成功上传： {{ successNum }}</el-tag>
-      <el-tag type="info">总大小：{{ totalSize }} </el-tag>
+      <el-tag type="info">总大小：{{ totalSizeDisplay }} </el-tag>
     </div>
     <!-- 翻页 -->
     <el-pagination
       background
       layout="prev, pager, next"
       style="text-align: right;"
-      :page-size="5"
+      :current-page="currentPage"
+      :page-size="pageSize"
       :total="fileNum"
       :hide-on-single-page="true"
+      @current-change="currentChange"
     >
     </el-pagination>
     <!-- 上传按钮 -->
@@ -90,53 +114,130 @@
 export default {
   data() {
     return {
-      fileNum: 0,
+      isDirectory: false, // 上传是否为文件夹模式
+      currentPage: 1,
+      pageSize: 4,
+      fileNum: 0, // 文件总数量
       successNum: 0,
       totalSize: 0,
+      tableData: [], // 用于table展示的文件信息
+      // 所有上传文件信息
       uploadInfo: [
-        {
-          filename: '124234.jpg',
-          filetype: 'image/jpeg',
-          filesize: 2345,
-          status: 0
-        },
-        {
-          filename: '9478345345.png',
-          filetype: 'image/png',
-          filesize: 23345,
-          status: 1
-        },
-        {
-          filename: '2342525.gif',
-          filetype: 'image/gif',
-          filesize: 5445565,
-          status: 2
-        },
-        {
-          filename: '5452525.gif',
-          filetype: 'image/gif',
-          filesize: 54545,
-          status: 3
-        }
+        // {
+        //   filename: '124234.jpg',
+        //   filetype: 'image/jpeg',
+        //   filesize: 2345,
+        //   status: 0
+        // },
+        // {
+        //   filename: '9478345345.png',
+        //   filetype: 'image/png',
+        //   filesize: 23345,
+        //   status: 1
+        // },
+        // {
+        //   filename: '2342525.gif',
+        //   filetype: 'image/gif',
+        //   filesize: 5445565,
+        //   status: 2
+        // },
+        // {
+        //   filename: '5452525.gif',
+        //   filetype: 'image/gif',
+        //   filesize: 54545,
+        //   status: 3
+        // }
       ]
+    }
+  },
+  computed: {
+    totalSizeDisplay() {
+      return this.fileSizeFormatter(this.totalSize)
     }
   },
   methods: {
     handleClick(...rest) {
       console.log(...rest)
     },
-    // 文件大小列格式化
-    filesizeFormatter(_, __, cellValue) {
+
+    /**
+     * @deprecated 当前页码改变函数：用于分页展示表格数据
+     * @param {number} pageIndex 当前页
+     */
+    currentChange(pageIndex) {
+      this.currentPage = pageIndex
+      // 对表格数据uploadInfo进行裁剪
+      // debugger
+      const firstIndex = this.pageSize * (pageIndex - 1)
+      this.tableData = this.uploadInfo.slice(
+        firstIndex,
+        firstIndex + this.pageSize
+      )
+    },
+
+    /**
+     * @description 通过按钮打开文件上传
+     * @param {boolean} isDirectory 是否为文件夹模式上传
+     */
+    clickUpload(isDirectory) {
+      if (isDirectory) {
+        this.$refs.directoryUpload.value = null
+        this.$refs.directoryUpload.click()
+      } else {
+        this.$refs.fileUpload.value = null
+        this.$refs.fileUpload.click()
+      }
+    },
+    /**
+     * @description 文件状态改变
+     */
+    uploadChange(e) {
+      console.log('files', e.target.files)
+      // 添加文件信息
+      this.addFiles(e.target.files)
+    },
+
+    /**
+     * @param {FileList} fileList 文件信息
+     */
+    addFiles(fileList) {
+      // 将选择的文件添加到上传文件信息uploadInfo中
+      fileList.forEach(item => {
+        const index = item.name.lastIndexOf('.')
+        const filename = item.name.slice(0, index)
+        const filetype = item.name.slice(index)
+        this.uploadInfo.push({
+          filename,
+          filetype,
+          filesize: item.size,
+          status: 0
+        })
+      })
+      // 根据已添加的文件信息，设置其他信息
+      this.totalSize = this.uploadInfo.reduce(
+        (prev, current) => (prev += current.filesize),
+        0
+      )
+      this.fileNum = this.uploadInfo.length
+      this.currentChange(this.currentPage)
+    },
+
+    // 表格列格式化处理函数
+    cellFormatter(_, __, cellValue) {
+      return this.fileSizeFormatter(cellValue)
+    },
+    // 对文件大小进行格式化处理
+    fileSizeFormatter(value) {
       // 显示单位 B KB MB GB, 相邻单位间换算都为1024倍
       const unit = ['B', 'KB', 'MB', 'GB']
       let level = 0
-      while (cellValue >= 1024) {
-        cellValue /= 1024
+      while (value >= 1024) {
+        value /= 1024
         level++
       }
       // 四舍五入，并加上单位
-      cellValue = Math.round(cellValue * 100) / 100
-      return `${cellValue} ${unit[level]}`
+      value = Math.round(value * 100) / 100
+      return `${value} ${unit[level]}`
     }
   }
 }
@@ -181,6 +282,12 @@ export default {
     }
   }
 
+  .ipt-upload {
+    display: none;
+    // height: 0;
+    // opacity: 0;
+  }
+
   .table-upload {
     ::v-deep .el-table__empty-text {
       height: 200px;
@@ -200,7 +307,6 @@ export default {
     }
 
     ::v-deep .setting {
-
       i {
         font-size: 26px;
       }
