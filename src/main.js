@@ -5,10 +5,11 @@ import VueLazyload from 'vue-lazyload'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import './util/useEle'
+import element from './util/useEle'
 
 Vue.config.productionTip = false
 Vue.use(infiniteScroll)
+Vue.use(element)
 // or with options
 const loadImage = require('./assets/images/loading.gif')
 const errorImage = require('./assets/images/error.png')
