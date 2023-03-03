@@ -1,8 +1,14 @@
 <template>
   <div class="container">
     <!-- 文件拖拽上传区域 -->
-    <div class="drag-upload">
+    <div
+      class="drag-upload"
+      @dragenter="handleDragenter"
+      @dragover="handleDragover"
+      @drop="handleDrop"
+    >
       <div><i class="el-icon-upload"></i>将目录或多个文件拖拽到此进行扫描</div>
+      <div>支持的文件类型：.jpg .jpeg .png .gif .webp</div>
       <div>每个文件允许的最大尺寸： 10MB</div>
     </div>
     <input
@@ -121,6 +127,8 @@ export default {
       successNum: 0,
       totalSize: 0,
       tableData: [], // 用于table展示的文件信息
+      timeId4File: 0,
+      timeId4Msg: 0,
       // 所有上传文件信息
       uploadInfo: [
         // {
@@ -161,6 +169,42 @@ export default {
     },
 
     /**
+     * @description 阻止默认事件，使其成为可拖拽目标
+     * @param {Event} e
+     */
+    handleDragenter(e) {
+      e.preventDefault()
+    },
+    handleDragover(e) {
+      e.preventDefault()
+    },
+    handleDrop(e) {
+      e.preventDefault()
+      // 遍历对象列表，获取所有文件，然后添加文件
+      // eslint-disable-next-line no-unused-vars
+      for (const item of event.dataTransfer.items) {
+        this.scanFiles(item.webkitGetAsEntry())
+      }
+    },
+
+    // 扫描获取文件
+    scanFiles(entry) {
+      if (entry.isDirectory) {
+        // 递归读取文件
+        const directoryReader = entry.createReader()
+        directoryReader.readEntries(entries => {
+          entries.forEach(entry => {
+            this.scanFiles(entry)
+          })
+        })
+      } else {
+        // 直接添加文件
+        entry.file(f => {
+          this.addFile(f)
+        })
+      }
+    },
+    /**
      * @deprecated 当前页码改变函数：用于分页展示表格数据
      * @param {number} pageIndex 当前页
      */
@@ -192,36 +236,78 @@ export default {
      * @description 文件状态改变
      */
     uploadChange(e) {
-      console.log('files', e.target.files)
       // 添加文件信息
       this.addFiles(e.target.files)
     },
 
     /**
-     * @param {FileList} fileList 文件信息
+     * @param {File} file 单个文件信息
+     */
+    addFile(file) {
+      // 将选择的文件添加到上传文件信息uploadInfo中
+      const index = file.name.lastIndexOf('.')
+      const filename = file.name.slice(0, index)
+      const filetype = file.name.slice(index)
+      // 进行判断
+      const isLegal = this.isLegal(filetype, file.size)
+      if (isLegal) {
+        this.uploadInfo.push({
+          filename,
+          filetype,
+          filesize: file.size,
+          status: 0
+        })
+        this.afterFileAdd()
+      } else {
+        if (this.timeId4Msg) {
+          clearTimeout(this.timeId4Msg)
+        }
+        this.timeId4Msg = setTimeout(() => {
+          this.$message.error('文件类型或大小不合法！')
+        }, 200)
+      }
+    },
+
+    /**
+     * @param {FileList} fileList 文件列表信息
      */
     addFiles(fileList) {
       // 将选择的文件添加到上传文件信息uploadInfo中
       fileList.forEach(item => {
-        const index = item.name.lastIndexOf('.')
-        const filename = item.name.slice(0, index)
-        const filetype = item.name.slice(index)
-        this.uploadInfo.push({
-          filename,
-          filetype,
-          filesize: item.size,
-          status: 0
-        })
+        this.addFile(item)
       })
-      // 根据已添加的文件信息，设置其他信息
-      this.totalSize = this.uploadInfo.reduce(
-        (prev, current) => (prev += current.filesize),
-        0
-      )
-      this.fileNum = this.uploadInfo.length
-      this.currentChange(this.currentPage)
     },
 
+    // 根据已添加的文件信息，设置其他信息
+    afterFileAdd() {
+      if (this.timeId4File) {
+        clearTimeout(this.timeId4File)
+      }
+      this.timeId4File = setTimeout(() => {
+        console.log('afterFileAdd')
+        this.totalSize = this.uploadInfo.reduce(
+          (prev, current) => (prev += current.filesize),
+          0
+        )
+        this.fileNum = this.uploadInfo.length
+        this.currentChange(this.currentPage)
+      }, 200)
+    },
+
+    /**
+     * @description 判断待上传文件是否合法
+     * @param {string} type
+     * @param {number} size
+     * @returns {boolean}
+     */
+    isLegal(type, size) {
+      const types = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+      if (!types.includes(type) || size > 10 * 1024 * 1024) {
+        return false
+      } else {
+        return true
+      }
+    },
     // 表格列格式化处理函数
     cellFormatter(_, __, cellValue) {
       return this.fileSizeFormatter(cellValue)
