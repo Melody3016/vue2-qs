@@ -9,7 +9,7 @@
     >
       <div><i class="el-icon-upload"></i>将目录或多个文件拖拽到此进行扫描</div>
       <div>支持的文件类型：.jpg .jpeg .png .gif .webp</div>
-      <div>每个文件允许的最大尺寸： 10MB</div>
+      <div>每个文件允许的最大尺寸： 2MB</div>
     </div>
     <input
       ref="fileUpload"
@@ -43,12 +43,18 @@
       :border="true"
       style="width: 100%"
       max-height="330"
+      @row-click="handleRowClick"
     >
-      <el-table-column prop="filename" label="文件名"></el-table-column>
-      <el-table-column prop="filetype" label="类型"></el-table-column>
       <el-table-column
-        prop="filesize"
+        prop="name"
+        label="文件名"
+        class-name="filename"
+      ></el-table-column>
+      <el-table-column prop="type" label="类型" width="110"></el-table-column>
+      <el-table-column
+        prop="size"
         label="大小"
+        width="110"
         :formatter="cellFormatter"
       ></el-table-column>
       <el-table-column prop="status" label="状态">
@@ -61,7 +67,12 @@
           <el-tag v-else-if="row.status === 3" type="success">已上传</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="setting" label="操作" class-name="setting">
+      <el-table-column
+        prop="setting"
+        label="操作"
+        class-name="setting"
+        width="180"
+      >
         <template #default="{ row }">
           <el-button
             v-if="row.status === 1"
@@ -80,7 +91,14 @@
           >
           </el-button>
           <el-button
-            @click="handleClick(row.id)"
+            @click="handleView(row)"
+            type="text"
+            size="small"
+            icon="el-icon-search"
+          >
+          </el-button>
+          <el-button
+            @click="handleDelete(row.uid)"
             type="text"
             size="small"
             icon="el-icon-delete"
@@ -112,7 +130,11 @@
     >
     </el-pagination>
     <!-- 上传按钮 -->
-    <el-button type="primary">开始上传</el-button>
+    <el-button type="primary" @click="handleUpload">开始上传</el-button>
+    <!-- 图片预览dialog -->
+    <el-dialog :visible.sync="dialogVisible">
+      <img :src="viewSrc" alt="" width="100%" />
+    </el-dialog>
   </div>
 </template>
 
@@ -124,11 +146,14 @@ export default {
       currentPage: 1,
       pageSize: 4,
       fileNum: 0, // 文件总数量
-      successNum: 0,
       totalSize: 0,
       tableData: [], // 用于table展示的文件信息
+      legalNum: 0, // 不合法文件数量
+      tempIndex: 0, // 用于生成文件唯一标识uid
       timeId4File: 0,
       timeId4Msg: 0,
+      dialogVisible: false,
+      viewSrc: '',
       // 所有上传文件信息
       uploadInfo: [
         // {
@@ -159,13 +184,44 @@ export default {
     }
   },
   computed: {
+    // 文件总大小
     totalSizeDisplay() {
       return this.fileSizeFormatter(this.totalSize)
+    },
+    // 成功上传文件数量
+    successNum() {
+      return this.uploadInfo.reduce((prev, current) => {
+        if (current.status === 3) {
+          prev = prev + 1
+        }
+        return prev
+      }, 0)
     }
   },
   methods: {
     handleClick(...rest) {
       console.log(...rest)
+    },
+    handleUpload() {
+      console.log(this.uploadInfo)
+    },
+
+    handleRowClick(row) {
+      // 单击一行，显示该行信息
+      console.log(row)
+    },
+    // 图片预览
+    handleView(row) {
+      this.dialogVisible = true
+      this.viewSrc = row.url
+    },
+
+    // 删除文件
+    handleDelete(id) {
+      // debugger
+      const index = this.uploadInfo.findIndex(item => item.uid === id)
+      this.uploadInfo.splice(index, 1)
+      this.afterFileChange()
     },
 
     /**
@@ -217,6 +273,10 @@ export default {
         firstIndex,
         firstIndex + this.pageSize
       )
+      // tableData无数据，当前页码-1
+      if (this.tableData.length === 0) {
+        this.currentChange(this.currentPage - 1)
+      }
     },
 
     /**
@@ -246,24 +306,33 @@ export default {
     addFile(file) {
       // 将选择的文件添加到上传文件信息uploadInfo中
       const index = file.name.lastIndexOf('.')
-      const filename = file.name.slice(0, index)
-      const filetype = file.name.slice(index)
+      const name = file.name.slice(0, index)
+      const type = file.name.slice(index)
       // 进行判断
-      const isLegal = this.isLegal(filetype, file.size)
+      const isLegal = this.isLegal(type, file.size)
       if (isLegal) {
+        // 创建文件本地预览url
+        const url = URL.createObjectURL(file)
+        // 生成文件唯一标识uid
+        const uid = '' + Date.now() + this.tempIndex++
         this.uploadInfo.push({
-          filename,
-          filetype,
-          filesize: file.size,
-          status: 0
+          uid,
+          name,
+          type,
+          size: file.size,
+          url,
+          status: 0,
+          percentage: 0,
+          raw: Object.assign(file, { uid })
         })
-        this.afterFileAdd()
+        this.afterFileChange()
       } else {
+        this.legalNum++
         if (this.timeId4Msg) {
           clearTimeout(this.timeId4Msg)
         }
         this.timeId4Msg = setTimeout(() => {
-          this.$message.error('文件类型或大小不合法！')
+          this.$message.error(`共${this.legalNum}个文件类型或大小不合法！`)
         }, 200)
       }
     },
@@ -278,15 +347,15 @@ export default {
       })
     },
 
-    // 根据已添加的文件信息，设置其他信息
-    afterFileAdd() {
+    // 根据文件信息变化，设置其他信息
+    afterFileChange() {
       if (this.timeId4File) {
         clearTimeout(this.timeId4File)
       }
       this.timeId4File = setTimeout(() => {
-        console.log('afterFileAdd')
+        console.log('afterFileChange')
         this.totalSize = this.uploadInfo.reduce(
-          (prev, current) => (prev += current.filesize),
+          (prev, current) => (prev += current.size),
           0
         )
         this.fileNum = this.uploadInfo.length
@@ -302,7 +371,7 @@ export default {
      */
     isLegal(type, size) {
       const types = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
-      if (!types.includes(type) || size > 10 * 1024 * 1024) {
+      if (!types.includes(type) || size > 2 * 1024 * 1024) {
         return false
       } else {
         return true
@@ -325,6 +394,9 @@ export default {
       value = Math.round(value * 100) / 100
       return `${value} ${unit[level]}`
     }
+  },
+  beforeDestory() {
+    URL.revokeObjectURL()
   }
 }
 </script>
@@ -395,6 +467,14 @@ export default {
     ::v-deep .setting {
       i {
         font-size: 26px;
+      }
+    }
+
+    ::v-deep .filename {
+      .cell {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

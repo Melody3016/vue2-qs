@@ -6,7 +6,8 @@
     "start": "npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "analyzer": "set analyzer=true && vue-cli-service build "
   },
   "dependencies": {
     "@balkangraph/orgchart.js": "^8.4.2",
@@ -46,6 +47,7 @@
     "node-sass": "^6.0.1",
     "sass": "^1.39.0",
     "sass-loader": "^10.1.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^4.8.0"
   }
 }
