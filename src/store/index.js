@@ -367,6 +367,13 @@ export default new Vuex.Store({
         title: '阿里云文件上传',
         componentUrl: 'project/AliUpload.vue',
         status: 3
+      },
+      {
+        path: '/deepCheck',
+        name: 'DeepCheck',
+        title: '多层级多选框',
+        componentUrl: 'project/DeepCheck.vue',
+        status: 3
       }
     ]
   },
