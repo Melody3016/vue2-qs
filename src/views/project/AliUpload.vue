@@ -62,9 +62,10 @@
           <el-tag v-if="row.status === 0">待上传</el-tag>
           <el-progress
             v-else-if="row.status === 1 || row.status === 2"
-            :percentage="50"
+            :percentage="row.percentage"
           ></el-progress>
           <el-tag v-else-if="row.status === 3" type="success">已上传</el-tag>
+          <el-tag v-else-if="row.status === -1" type="danger">上传失败</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -75,8 +76,16 @@
       >
         <template #default="{ row }">
           <el-button
+            v-if="row.status === -1"
+            @click="handleReUpload(row)"
+            type="text"
+            size="small"
+            icon="el-icon-refresh-left"
+          >
+          </el-button>
+          <el-button
             v-if="row.status === 1"
-            @click="handleClick(row.id)"
+            @click="handlePause(row)"
             type="text"
             size="small"
             icon="el-icon-video-pause"
@@ -84,7 +93,7 @@
           </el-button>
           <el-button
             v-if="row.status === 2"
-            @click="handleClick(row.id)"
+            @click="handlePlay(row)"
             type="text"
             size="small"
             icon="el-icon-video-play"
@@ -199,13 +208,89 @@ export default {
     }
   },
   methods: {
-    handleClick(...rest) {
-      console.log(...rest)
+    handlePlay(item) {
+      console.log('断点续传。。', item)
+    },
+    // 暂停上传
+    handlePause(item) {
+      item.abort()
+      item.status = 2
+    },
+    // 手动重新上传
+    handleReUpload(item) {
+      item.abort = this.upload(
+        item.raw,
+        progress => {
+          item.percentage = progress
+        },
+        res => {
+          if (res.code === 200) {
+            item.status = 3
+          } else {
+            // 上传失败
+            item.status = -1
+          }
+        }
+      )
     },
     handleUpload() {
       console.log(this.uploadInfo)
+      // 遍历文件信息uploadInfo，每个文件单独进行上传
+      this.uploadInfo.forEach(item => {
+        if (item.status === 0) {
+          item.status = 1
+          item.abort = this.upload(
+            item.raw,
+            progress => {
+              item.percentage = progress
+            },
+            res => {
+              if (res.code === 200) {
+                item.status = 3
+              } else {
+                // 上传失败
+                item.status = -1
+              }
+            }
+          )
+        }
+      })
     },
 
+    /**
+     * @description 上传文件方法
+     * @param {File} file 文件信息对象
+     * @param {Function} onProgress 传递文件上传进度回调
+     * @param {Function} onFinish 文件上传结束回调
+     * @returns {Function} 停止文件上传方法
+     */
+    upload(file, onProgress, onFinish) {
+      const xhr = new XMLHttpRequest()
+      xhr.open('POST', '/my-web/upload')
+      // 封装请求对象
+      const formData = new FormData()
+      formData.append('avatar', file)
+      // 监听进度
+      xhr.upload.onprogress = function(res) {
+        // 计算进度
+        const progress = Math.round((res.loaded / res.total) * 100)
+        onProgress(progress)
+      }
+      // 监听请求结束事件
+      xhr.onloadend = function() {
+        if (xhr.status === 200) {
+          // 成功
+          onFinish(JSON.parse(xhr.responseText))
+        } else {
+          // 失败
+          onFinish({ code: 400 })
+        }
+      }
+      xhr.send(formData)
+      return () => {
+        xhr.abort()
+      }
+    },
     handleRowClick(row) {
       // 单击一行，显示该行信息
       console.log(row)
@@ -371,7 +456,7 @@ export default {
      */
     isLegal(type, size) {
       const types = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
-      if (!types.includes(type) || size > 2 * 1024 * 1024) {
+      if (!types.includes(type) || size > 200 * 1024 * 1024) {
         return false
       } else {
         return true
