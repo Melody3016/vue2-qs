@@ -374,6 +374,13 @@ export default new Vuex.Store({
         title: '多层级多选框',
         componentUrl: 'project/DeepCheck.vue',
         status: 3
+      },
+      {
+        path: '/inputModel',
+        name: 'InputModel',
+        title: 'input双向绑定',
+        componentUrl: 'base/InputModel.vue',
+        status: 1
       }
     ]
   },
