@@ -381,6 +381,13 @@ export default new Vuex.Store({
         title: 'input双向绑定',
         componentUrl: 'base/InputModel.vue',
         status: 1
+      },
+      {
+        path: '/computedTest',
+        name: 'ComputedTest',
+        title: '计算属性的触发',
+        componentUrl: 'base/ComputedTest.vue',
+        status: 1
       }
     ]
   },
